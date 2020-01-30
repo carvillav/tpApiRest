@@ -1,7 +1,7 @@
 const Curso = require('../models/Curso');
 
 const {validationResult}=require('express-validator');
-
+/*
 const getCursos = (req, res, next) => {
     const query = req.query || {};
 
@@ -19,12 +19,16 @@ const getCursos = (req, res, next) => {
                 message: "Ocurrió un error con un módulo interno"
             });
         })
-};
+};*/
 
 const getCurso = (req, res, next) => {
-    const id = req.params.id;
+    const duracion = req.query.duracion;
+    const anio = req.query.anio;
+/*
+    const query = {duracion:duracion, anioDictado:anio};
+    console.log(query) ;*/
 
-    Curso.findById(id)
+    Curso.find({duracion:duracion, anioDictado:anio})
         .then(curso => {
             if (!curso) {
                 res.status(404).json({
@@ -33,8 +37,8 @@ const getCurso = (req, res, next) => {
                 })
             } else {
                 res.status(200).json({
-                    code: 0,
-                    message: factura
+                    code: 00,
+                    message: curso
                 });
             }
         })
@@ -102,5 +106,5 @@ const deleteCurso = (req, res, next) => {
         })
 };
 
-module.exports = { getCursos, getCurso, postCurso, deleteCurso };
+module.exports = { /*getCursos,*/ getCurso, postCurso, deleteCurso };
 

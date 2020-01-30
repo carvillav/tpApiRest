@@ -3,7 +3,7 @@ const app = express();
 app.use(express.urlencoded());
 app.use(express.json());
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
@@ -19,14 +19,11 @@ const mongoose = require('mongoose');
 const mongoURI = process.env.MONGO_URI || "mongodb://localhost:27017/DBlandIT";
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
     .then(() => {
-        app.listen(port, () => { console.log('Corriendo en port ${port}') })
+        app.listen(port, () => { console.log('Bienvenido estas corriendo en el puerto ' + port) })
     })
     .catch(err => {
         console.log(err);
     });
-
-app.listen(3000, function(){console.log("Bienvenido...Estas escuchando en el puerto 3000");});
-
 
 
 

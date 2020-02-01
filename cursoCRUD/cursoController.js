@@ -1,8 +1,8 @@
 const Curso = require('../models/Curso');
 
 const {validationResult}=require('express-validator');
-/*
-const getCursos = (req, res, next) => {
+
+const getListadoCursos = (req, res, next) => {
     const query = req.query || {};
 
     Curso.find(query).limit(10)
@@ -19,14 +19,11 @@ const getCursos = (req, res, next) => {
                 message: "Ocurrió un error con un módulo interno"
             });
         })
-};*/
+};
 
 const getCurso = (req, res, next) => {
     const duracion = req.query.duracion;
     const anio = req.query.anio;
-/*
-    const query = {duracion:duracion, anioDictado:anio};
-    console.log(query) ;*/
 
     Curso.find({duracion:duracion, anioDictado:anio})
         .then(curso => {
@@ -52,6 +49,32 @@ const getCurso = (req, res, next) => {
 };
 
 
+const getListadoAlumnoXCurso = (req, res, next) => {
+    const id = req.query.id;
+
+    Curso.findById({id},{alumnos:1})
+        .then(curso => {
+            if (!curso) {
+                res.status(404).json({
+                    code: 12,
+                    message: "El recurso no fue encontrado"
+                })
+            } else {
+                res.status(200).json({
+                    code: 00,
+                    message: curso
+                });
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                code: 20,
+                message: "Ocurrió un error con un módulo interno"
+            });
+        })
+};
+
 const postCurso = (req, res, next) => {
     const errors = validationResult(req);
 
@@ -68,7 +91,7 @@ const postCurso = (req, res, next) => {
         anioDictado: body.anioDictado,
         duracion: body.duracion,
         tema: body.tema,
-        //alumnos: { type: Cliente }        
+        alumnos: body.alumnos        
     });
 
     newCurso.save()
@@ -106,5 +129,5 @@ const deleteCurso = (req, res, next) => {
         })
 };
 
-module.exports = { /*getCursos,*/ getCurso, postCurso, deleteCurso };
+module.exports = { getListadoCursos, getCurso, getListadoAlumnoXCurso, postCurso, deleteCurso };
 

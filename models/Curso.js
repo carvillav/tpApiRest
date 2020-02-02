@@ -6,7 +6,7 @@ var Curso = new mongoose.Schema({
     anioDictado: Number,
     duracion: Number,
     tema: String,
-    alumnos: { type: Cliente }
+    alumnos: { type: [Cliente] }
   },{collection:'cursos'});
   
   module.exports = mongoose.model('Curso', Curso);

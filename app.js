@@ -8,13 +8,9 @@ const port = process.env.PORT || 3000;
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
-//app.use('/cliente', clienteController);
 //enlazar router cursos
 const cursoRouter = require('./cursoCRUD/cursoRouter');
 app.use('/cursos', cursoRouter);
-
-//enlazar router Cliente
-//const clienteRouter = require('./clientesCRUD/clienteController');
 
 app.use('/', (req, res, next) => { res.status(200).json({code: 0, message: "Estás en la página de inicio"}) });
 

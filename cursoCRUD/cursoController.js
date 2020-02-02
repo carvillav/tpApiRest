@@ -48,33 +48,6 @@ const getCurso = (req, res, next) => {
         })
 };
 
-
-const getListadoAlumnoXCurso = (req, res, next) => {
-    const id = req.query.id;
-
-    Curso.findById({id},{alumnos:1})
-        .then(curso => {
-            if (!curso) {
-                res.status(404).json({
-                    code: 12,
-                    message: "El recurso no fue encontrado"
-                })
-            } else {
-                res.status(200).json({
-                    code: 00,
-                    message: curso
-                });
-            }
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({
-                code: 20,
-                message: "Ocurrió un error con un módulo interno"
-            });
-        })
-};
-
 const postCurso = (req, res, next) => {
     const errors = validationResult(req);
 
@@ -129,5 +102,5 @@ const deleteCurso = (req, res, next) => {
         })
 };
 
-module.exports = { getListadoCursos, getCurso, getListadoAlumnoXCurso, postCurso, deleteCurso };
+module.exports = { getListadoCursos, getCurso, postCurso, deleteCurso };
 
